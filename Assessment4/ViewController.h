@@ -10,4 +10,7 @@
 
 @interface ViewController : UIViewController
 
+@property NSManagedObjectContext *managedObjectContext;
+@property (strong, nonatomic) NSFetchedResultsController *fetchedResultsController;
+
 @end

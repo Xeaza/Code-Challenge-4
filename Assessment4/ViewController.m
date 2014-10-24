@@ -7,13 +7,15 @@
 //
 
 #import "ViewController.h"
-
+#import "DogsViewController.h"
+#import "Owner.h"
 @interface ViewController () <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *myTableView;
 
 @property UIAlertView *addAlert;
 @property UIAlertView *colorAlert;
+@property NSArray *owners;
 
 @end
 
@@ -23,67 +25,124 @@
 {
     [super viewDidLoad];
     self.title = @"Dog Owners";
+    [self setNavButtonColor];
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (![defaults objectForKey:@"dataImported"])
+    {
+        [self loadData];
+        [defaults setBool:YES forKey:@"dataImported"];
+    }
+    [self fetchOwners];
+}
+
+- (void)loadData
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://s3.amazonaws.com/mobile-makers-assets/app/public/ckeditor_assets/attachments/25/owners.json"]];
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+     {
+
+         NSArray *namesArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+         for (NSString *name in namesArray)
+         {
+             Owner *owner = [NSEntityDescription insertNewObjectForEntityForName:@"Owner" inManagedObjectContext:self.managedObjectContext];
+             owner.name = name;
+         }
+         [self.managedObjectContext save:nil];
+         [self fetchOwners];
+     }];
+}
+
+-(void)fetchOwners
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc]initWithEntityName:@"Owner"];
+    self.owners = [self.managedObjectContext executeFetchRequest:request error:nil];
+    [self.myTableView reloadData];
+}
+
+#pragma mark - Segue
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    NSIndexPath *indexPath = [self.myTableView indexPathForSelectedRow];
+
+    if ([segue.identifier isEqualToString:@"OwnersDogsSegue"])
+    {
+        DogsViewController *dogsViewController = segue.destinationViewController;
+        Owner *owner = [self.owners objectAtIndex:indexPath.row];
+        dogsViewController.owner = owner;
+        dogsViewController.managedObjectContext = self.managedObjectContext;
+        dogsViewController.fetchedResultsController = self.fetchedResultsController;
+    }
 }
 
 #pragma mark - UITableView Delegate Methods
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    //TODO: UPDATE THIS ACCORDINGLY
-    return 1;
+    return self.owners.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"myCell"];
-    //TODO: UPDATE THIS ACCORDINGLY
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: @"myCell"];
+    Owner *owner = [self.owners objectAtIndex:indexPath.row];
+    cell.textLabel.text = owner.name;
     return cell;
 }
 
 #pragma mark - UIAlertView Methods
 
-//METHOD FOR PRESENTING ALERT VIEW WITH TEXT FIELD FOR USER TO ENTER NEW PERSON
-- (IBAction)onAddButtonTapped:(UIBarButtonItem *)sender
-{
-    self.addAlert = [[UIAlertView alloc] initWithTitle:@"Add a Person"
-                                                    message:nil
-                                                   delegate:self
-                                          cancelButtonTitle:@"Cancel"
-                                          otherButtonTitles:@"Add", nil];
-    self.addAlert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField *alertTextField = [self.addAlert textFieldAtIndex:0];
-    alertTextField.keyboardType = UIKeyboardTypeDefault;
-
-    self.addAlert.tag = 0;
-    [self.addAlert show];
-}
-
 -(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex != alertView.cancelButtonIndex && alertView.tag == 0)
-    {
-        //TODO: ADD YOUR CODE HERE FOR WHEN USER ADDS NEW PERSON
-    }
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    //TODO: SAVE USER'S DEFAULT COLOR PREFERENCE USING THE CONDITIONAL BELOW
-    else if (alertView.tag == 1)
+    if (buttonIndex == 0)
     {
-        if (buttonIndex == 0)
-        {
+        [defaults setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"color"];
+        self.navigationController.navigationBar.tintColor = [UIColor purpleColor];
+    }
+    else if (buttonIndex == 1)
+    {
+        [defaults setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"color"];
+        self.navigationController.navigationBar.tintColor = [UIColor blueColor];
+    }
+    else if (buttonIndex == 2)
+    {
+        [defaults setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"color"];
+        self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
+    }
+    else if (buttonIndex == 3)
+    {
+        [defaults setObject:[NSNumber numberWithInteger:buttonIndex] forKey:@"color"];
+        self.navigationController.navigationBar.tintColor = [UIColor greenColor];
+    }
+}
+
+- (void)setNavButtonColor
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    switch ([[defaults objectForKey:@"color"] integerValue])
+    {
+        case 0:
             self.navigationController.navigationBar.tintColor = [UIColor purpleColor];
-        }
-        else if (buttonIndex == 1)
-        {
+            break;
+
+        case 1:
             self.navigationController.navigationBar.tintColor = [UIColor blueColor];
-        }
-        else if (buttonIndex == 2)
-        {
+            break;
+
+        case 2:
             self.navigationController.navigationBar.tintColor = [UIColor orangeColor];
-        }
-        else if (buttonIndex == 3)
-        {
+            break;
+
+        case 3:
             self.navigationController.navigationBar.tintColor = [UIColor greenColor];
-        }
+            break;
+        default:
+            break;
     }
 }
 

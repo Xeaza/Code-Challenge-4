@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		342CDA3919FAA04B00BD14F3 /* Dog.m in Sources */ = {isa = PBXBuildFile; fileRef = 342CDA3819FAA04B00BD14F3 /* Dog.m */; };
+		342CDA3F19FAA61C00BD14F3 /* DogsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 342CDA3E19FAA61C00BD14F3 /* DogsTableViewCell.m */; };
+		342CDA7A19FAB60B00BD14F3 /* Owner.m in Sources */ = {isa = PBXBuildFile; fileRef = 342CDA7919FAB60B00BD14F3 /* Owner.m */; };
 		93CD77B11999604D00D27E0A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD77B01999604D00D27E0A /* Foundation.framework */; };
 		93CD77B31999604D00D27E0A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD77B21999604D00D27E0A /* CoreGraphics.framework */; };
 		93CD77B51999604D00D27E0A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93CD77B41999604D00D27E0A /* UIKit.framework */; };
@@ -37,6 +40,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		342CDA3719FAA04B00BD14F3 /* Dog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Dog.h; sourceTree = "<group>"; };
+		342CDA3819FAA04B00BD14F3 /* Dog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Dog.m; sourceTree = "<group>"; };
+		342CDA3D19FAA61C00BD14F3 /* DogsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DogsTableViewCell.h; sourceTree = "<group>"; };
+		342CDA3E19FAA61C00BD14F3 /* DogsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DogsTableViewCell.m; sourceTree = "<group>"; };
+		342CDA7819FAB60B00BD14F3 /* Owner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Owner.h; sourceTree = "<group>"; };
+		342CDA7919FAB60B00BD14F3 /* Owner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Owner.m; sourceTree = "<group>"; };
 		93CD77AD1999604D00D27E0A /* Assessment4.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assessment4.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93CD77B01999604D00D27E0A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		93CD77B21999604D00D27E0A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -129,8 +138,14 @@
 				93CD77E6199962E900D27E0A /* DogsViewController.m */,
 				93CD77E81999642A00D27E0A /* AddDogViewController.h */,
 				93CD77E91999642A00D27E0A /* AddDogViewController.m */,
+				342CDA3D19FAA61C00BD14F3 /* DogsTableViewCell.h */,
+				342CDA3E19FAA61C00BD14F3 /* DogsTableViewCell.m */,
 				93CD77C81999604D00D27E0A /* Images.xcassets */,
 				93CD77EB199964A100D27E0A /* Model.xcdatamodeld */,
+				342CDA3719FAA04B00BD14F3 /* Dog.h */,
+				342CDA3819FAA04B00BD14F3 /* Dog.m */,
+				342CDA7819FAB60B00BD14F3 /* Owner.h */,
+				342CDA7919FAB60B00BD14F3 /* Owner.m */,
 				93CD77B71999604D00D27E0A /* Supporting Files */,
 			);
 			path = Assessment4;
@@ -263,7 +278,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				93CD77C71999604D00D27E0A /* ViewController.m in Sources */,
+				342CDA7A19FAB60B00BD14F3 /* Owner.m in Sources */,
 				93CD77C11999604D00D27E0A /* AppDelegate.m in Sources */,
+				342CDA3F19FAA61C00BD14F3 /* DogsTableViewCell.m in Sources */,
+				342CDA3919FAA04B00BD14F3 /* Dog.m in Sources */,
 				93CD77BD1999604D00D27E0A /* main.m in Sources */,
 				93CD77EA1999642A00D27E0A /* AddDogViewController.m in Sources */,
 				93CD77E7199962E900D27E0A /* DogsViewController.m in Sources */,
@@ -472,6 +490,7 @@
 				93CD77E11999604D00D27E0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		93CD77E21999604D00D27E0A /* Build configuration list for PBXNativeTarget "Assessment4Tests" */ = {
 			isa = XCConfigurationList;
@@ -480,6 +499,7 @@
 				93CD77E41999604D00D27E0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
