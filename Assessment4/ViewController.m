@@ -38,21 +38,25 @@
 
 - (void)loadData
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://s3.amazonaws.com/mobile-makers-assets/app/public/ckeditor_assets/attachments/25/owners.json"]];
+    [Owner fetchDogOwners:self.managedObjectContext andComplete:^{
+        [self fetchOwners];
+    }];
 
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
-     {
-
-         NSArray *namesArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-         for (NSString *name in namesArray)
-         {
-             Owner *owner = [NSEntityDescription insertNewObjectForEntityForName:@"Owner" inManagedObjectContext:self.managedObjectContext];
-             owner.name = name;
-         }
-         [self.managedObjectContext save:nil];
-         [self fetchOwners];
-     }];
+//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://s3.amazonaws.com/mobile-makers-assets/app/public/ckeditor_assets/attachments/25/owners.json"]];
+//
+//    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+//    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError)
+//     {
+//
+//         NSArray *namesArray = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//         for (NSString *name in namesArray)
+//         {
+//             Owner *owner = [NSEntityDescription insertNewObjectForEntityForName:@"Owner" inManagedObjectContext:self.managedObjectContext];
+//             owner.name = name;
+//         }
+//         [self.managedObjectContext save:nil];
+//         [self fetchOwners];
+//     }];
 }
 
 -(void)fetchOwners

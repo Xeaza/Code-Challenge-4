@@ -25,4 +25,6 @@
 - (void)addDogs:(NSSet *)values;
 - (void)removeDogs:(NSSet *)values;
 
++ (void)fetchDogOwners:(NSManagedObjectContext *)passedmanagedObjectContext andComplete:(void (^)(void))complete;
+
 @end
