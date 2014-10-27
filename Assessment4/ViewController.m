@@ -38,6 +38,7 @@
 
 - (void)loadData
 {
+    // TODO - Keep modeling this towards MVC
     [Owner fetchDogOwners:self.managedObjectContext andComplete:^{
         [self fetchOwners];
     }];
